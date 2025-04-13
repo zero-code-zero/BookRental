@@ -1,4 +1,4 @@
-package com.codezero.HelloWorld;
+package com.codezero.BookRental;
 
 public class Book {
     private Long id;

@@ -1,4 +1,4 @@
-package com.codezero.HelloWorld;
+package com.codezero.BookRental;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
