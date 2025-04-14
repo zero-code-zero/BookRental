@@ -1,9 +1,12 @@
 package com.codezero.BookRental;
 
+import com.codezero.BookRental.exception.NotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.Mockito.mock;
 
 
 public class BookServiceTest {
@@ -11,7 +14,8 @@ public class BookServiceTest {
 
     @BeforeEach
     void setUp() {
-        bookService = new BookService();
+        BookRepository bookRepository = mock(BookRepository.class);
+        bookService = new BookService(bookRepository);
     }
 
     @Test
@@ -59,5 +63,12 @@ public class BookServiceTest {
         Book book = new Book();
         book.setTitle(title);
         return book;
+    }
+
+    @Test
+    void 책을_조회한다() {
+        assertThatThrownBy(()->bookService.getBookById(11L))
+                .isInstanceOf(NotFoundException.class)
+                .hasMessage("도서를 찾을 수 없습니다.");
     }
 }
