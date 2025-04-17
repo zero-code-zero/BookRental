@@ -1,5 +1,6 @@
 package com.codezero.BookRental;
 
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,8 +22,8 @@ public class BookController {
     }
 
     @PostMapping
-    public ResponseEntity<Book> createBook(@RequestBody Book book) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(bookService.createBook(book));
+    public ResponseEntity<Book> createBook(@RequestBody @Valid BookRequest bookRequest) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(bookService.createBook(bookRequest));
     }
 
     @PutMapping("/{id}")

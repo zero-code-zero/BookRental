@@ -17,10 +17,8 @@ public class BookService {
         this.bookRepository = bookRepository;
     }
 
-    public Book createBook(Book book) {
-        book.setId((long) (books.size() + 1));
-        books.add(book);
-        return book;
+    public Book createBook(BookRequest bookRequest) {
+        return bookRepository.save(new Book(bookRequest.getTitle(), bookRequest.getAuthor(), bookRequest.getPublishedDate()));
     }
 
     public List<Book> getBooks() {

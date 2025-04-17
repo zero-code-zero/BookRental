@@ -4,6 +4,8 @@ import com.codezero.BookRental.exception.NotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.mock;
@@ -20,11 +22,13 @@ public class BookServiceTest {
 
     @Test
     void 책을_생성한다() {
-        Book book = new Book();
+        BookRequest bookRequest = new BookRequest();
         String bookName = "테스트 책";
-        book.setTitle(bookName);
+        bookRequest.setTitle(bookName);
+        bookRequest.setAuthor("홍길동");
+        bookRequest.setPublishedDate(LocalDate.of(2000,4,16));
 
-        Book saved = bookService.createBook(book);
+        Book saved = bookService.createBook(bookRequest);
 
         assertThat(saved.getId()).isNotNull();
         assertThat(saved.getTitle()).isEqualTo(bookName);
@@ -33,11 +37,13 @@ public class BookServiceTest {
 
     @Test
     void 책을_수정한다() {
-        Book book = new Book();
+        BookRequest bookRequest = new BookRequest();
         String bookName = "원본 책";
-        book.setTitle(bookName);
+        bookRequest.setTitle(bookName);
+        bookRequest.setAuthor("홍길동");
+        bookRequest.setPublishedDate(LocalDate.of(2000,4,16));
 
-        bookService.createBook(book);
+        bookService.createBook(bookRequest);
 
         Book update = new Book();
         String updateBookName = "수정된 책";
@@ -50,8 +56,11 @@ public class BookServiceTest {
 
     @Test
     void 책을_삭제한다() {
-        Book book = createBook("삭제할 책");
-        bookService.createBook(book);
+        BookRequest bookRequest = new BookRequest();
+        bookRequest.setTitle("초보강의");
+        bookRequest.setAuthor("홍길동");
+        bookRequest.setPublishedDate(LocalDate.of(2000,4,16));
+        bookService.createBook(bookRequest);
 
         boolean deleted = bookService.deleteBook(1L);
 
