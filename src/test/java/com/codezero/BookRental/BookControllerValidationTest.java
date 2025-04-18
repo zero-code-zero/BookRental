@@ -1,5 +1,6 @@
 package com.codezero.BookRental;
 
+import com.codezero.BookRental.repositories.BookRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

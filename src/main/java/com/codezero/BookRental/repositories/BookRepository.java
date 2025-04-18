@@ -1,5 +1,6 @@
-package com.codezero.BookRental;
+package com.codezero.BookRental.repositories;
 
+import com.codezero.BookRental.entitis.Book;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDate;

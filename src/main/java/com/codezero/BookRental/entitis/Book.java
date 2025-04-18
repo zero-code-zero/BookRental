@@ -1,4 +1,4 @@
-package com.codezero.BookRental;
+package com.codezero.BookRental.entitis;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -11,13 +11,16 @@ import java.time.LocalDate;
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private final Long id;
     private String title;
     private String author;
     private LocalDate publishedDate;
 
-    public Book() {}
+    public Book() {
+        this.id = null;
+    }
     public Book(String title, String author, LocalDate publishedDate) {
+        this.id = null;
         this.title = title;
         this.author = author;
         this.publishedDate = publishedDate;
@@ -25,10 +28,6 @@ public class Book {
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getTitle() {
