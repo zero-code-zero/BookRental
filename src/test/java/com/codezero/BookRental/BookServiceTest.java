@@ -22,26 +22,19 @@ public class BookServiceTest {
 
     @Test
     void 책을_생성한다() {
-        BookRequest bookRequest = new BookRequest();
-        String bookName = "테스트 책";
-        bookRequest.setTitle(bookName);
-        bookRequest.setAuthor("홍길동");
-        bookRequest.setPublishedDate(LocalDate.of(2000,4,16));
+        BookRequest bookRequest = new BookRequest("테스트책", "홍길동", LocalDate.of(2000,4,10));
 
         Book saved = bookService.createBook(bookRequest);
 
         assertThat(saved.getId()).isNotNull();
-        assertThat(saved.getTitle()).isEqualTo(bookName);
+        assertThat(saved.getTitle()).isEqualTo("테스트책");
         assertThat(bookService.getBooks()).hasSize(1);
     }
 
     @Test
     void 책을_수정한다() {
-        BookRequest bookRequest = new BookRequest();
-        String bookName = "원본 책";
-        bookRequest.setTitle(bookName);
-        bookRequest.setAuthor("홍길동");
-        bookRequest.setPublishedDate(LocalDate.of(2000,4,16));
+        BookRequest bookRequest = new BookRequest("원본책","홍길동",LocalDate.of(2000,4,10));
+
 
         bookService.createBook(bookRequest);
 
@@ -56,10 +49,8 @@ public class BookServiceTest {
 
     @Test
     void 책을_삭제한다() {
-        BookRequest bookRequest = new BookRequest();
-        bookRequest.setTitle("초보강의");
-        bookRequest.setAuthor("홍길동");
-        bookRequest.setPublishedDate(LocalDate.of(2000,4,16));
+        BookRequest bookRequest = new BookRequest("스프링부트 초보강의", "홍길동",LocalDate.of(2000,4,10));
+
         bookService.createBook(bookRequest);
 
         boolean deleted = bookService.deleteBook(1L);
