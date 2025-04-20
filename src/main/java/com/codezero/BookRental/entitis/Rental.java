@@ -10,7 +10,7 @@ public class Rental {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private final Long id;
     @ManyToOne(fetch = FetchType.LAZY)
-    private User user;
+    private Member member;
     @ManyToOne(fetch = FetchType.LAZY)
     private Book book;
     private LocalDate rentedDate;
@@ -20,23 +20,24 @@ public class Rental {
         this.id = null;
     }
 
-    public Rental(User user, Book book) {
+    public Rental(Member member, Book book) {
         this.id = null;
-        this.user = user;
+        this.member = member;
         this.book = book;
         this.rentedDate = LocalDate.now();
+        this.returnedDate = null;
     }
 
     public Long getId() {
         return id;
     }
 
-    public User getUser() {
-        return user;
+    public Member getUser() {
+        return member;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUser(Member member) {
+        this.member = member;
     }
 
     public Book getBook() {

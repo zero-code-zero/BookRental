@@ -1,5 +1,6 @@
-package com.codezero.BookRental;
+package com.codezero.BookRental.service;
 
+import com.codezero.BookRental.BookRequest;
 import com.codezero.BookRental.entitis.Book;
 import com.codezero.BookRental.repositories.BookRepository;
 import com.codezero.BookRental.exception.NotFoundException;

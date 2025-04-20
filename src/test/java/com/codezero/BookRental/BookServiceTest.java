@@ -3,6 +3,7 @@ package com.codezero.BookRental;
 import com.codezero.BookRental.entitis.Book;
 import com.codezero.BookRental.repositories.BookRepository;
 import com.codezero.BookRental.exception.NotFoundException;
+import com.codezero.BookRental.service.BookService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

@@ -1,6 +1,7 @@
 package com.codezero.BookRental;
 
 import com.codezero.BookRental.entitis.Book;
+import com.codezero.BookRental.service.BookService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
