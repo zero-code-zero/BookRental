@@ -1,5 +1,6 @@
 package com.codezero.BookRental;
 
+import com.codezero.BookRental.dto.BookRequest;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;

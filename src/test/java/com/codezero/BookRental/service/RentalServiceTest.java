@@ -1,5 +1,6 @@
 package com.codezero.BookRental.service;
 
+import com.codezero.BookRental.dto.RentalRequest;
 import com.codezero.BookRental.entitis.Book;
 import com.codezero.BookRental.entitis.Rental;
 import com.codezero.BookRental.entitis.Member;
@@ -30,10 +31,10 @@ class RentalServiceTest {
 
         Book book = bookRepository.save(new Book("스트핑부트 초보강의", "코드제로", LocalDate.of(2025,4,19)));
         Member member = memberRepository.save(new Member("코드제로"));
+        RentalRequest rentalRequest = new RentalRequest(member.getId(), book.getId());
 
         rentalRepository.save(new Rental(member, book));
-
-        assertThatThrownBy(()->service.rentBook(book.getId(), member.getId()))
+        assertThatThrownBy(()->service.rentBook(rentalRequest))
                 .isInstanceOf(AlreadyExistsException.class)
                 .hasMessage("이미 대여 중입니다.");
     }

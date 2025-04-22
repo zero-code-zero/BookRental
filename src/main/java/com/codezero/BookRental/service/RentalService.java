@@ -1,5 +1,6 @@
 package com.codezero.BookRental.service;
 
+import com.codezero.BookRental.dto.RentalRequest;
 import com.codezero.BookRental.entitis.Book;
 import com.codezero.BookRental.entitis.Rental;
 import com.codezero.BookRental.entitis.Member;
@@ -9,6 +10,9 @@ import com.codezero.BookRental.repositories.BookRepository;
 import com.codezero.BookRental.repositories.MemberRepository;
 import com.codezero.BookRental.repositories.RentalRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
 
 @Service
 public class RentalService {
@@ -21,15 +25,21 @@ public class RentalService {
         this.userRepository = userRepository;
         this.rentalRepository = rentalRepository;
     }
-
-    public void rentBook(Long bookId, Long userId) {
-        Book book = bookRepository.findById(bookId).orElseThrow(()->new NotFoundException("해당하는 책이 없습니다."));
-        Member member = userRepository.findById(userId).orElseThrow(()->new NotFoundException("사용자가 없습니다."));
+    @Transactional
+    public Rental rentBook(RentalRequest request) {
+        Book book = bookRepository.findById(request.getBookId()).orElseThrow(()->new NotFoundException("해당하는 책이 없습니다."));
+        Member member = userRepository.findById(request.getMemberId()).orElseThrow(()->new NotFoundException("사용자가 없습니다."));
 
         boolean isRented = rentalRepository.existsByBookAndReturnedDateIsNull(book);
         if (isRented) throw new AlreadyExistsException("이미 대여 중입니다.");
 
         Rental rental = new Rental(member, book);
-        rentalRepository.save(rental);
+        return rentalRepository.save(rental);
+    }
+    @Transactional
+    public void returnBook(Long rentalId) {
+        Rental rental = rentalRepository.findByIdAndReturnedDateIsNull(rentalId)
+                .orElseThrow(()->new NotFoundException("대여중인 책이 없습니다."));
+        rental.setReturnedDate(LocalDate.now());
     }
 }

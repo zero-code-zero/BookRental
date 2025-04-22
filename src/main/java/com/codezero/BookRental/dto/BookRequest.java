@@ -1,4 +1,4 @@
-package com.codezero.BookRental;
+package com.codezero.BookRental.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

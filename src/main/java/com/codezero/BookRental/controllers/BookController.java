@@ -1,5 +1,6 @@
-package com.codezero.BookRental;
+package com.codezero.BookRental.controllers;
 
+import com.codezero.BookRental.dto.BookRequest;
 import com.codezero.BookRental.entitis.Book;
 import com.codezero.BookRental.service.BookService;
 import jakarta.validation.Valid;
