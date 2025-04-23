@@ -1,6 +1,7 @@
 package com.codezero.BookRental.service;
 
 import com.codezero.BookRental.dto.RentalRequest;
+import com.codezero.BookRental.dto.RentalResponse;
 import com.codezero.BookRental.entitis.Book;
 import com.codezero.BookRental.entitis.Rental;
 import com.codezero.BookRental.entitis.Member;
@@ -26,15 +27,16 @@ public class RentalService {
         this.rentalRepository = rentalRepository;
     }
     @Transactional
-    public Rental rentBook(RentalRequest request) {
-        Book book = bookRepository.findById(request.getBookId()).orElseThrow(()->new NotFoundException("해당하는 책이 없습니다."));
-        Member member = userRepository.findById(request.getMemberId()).orElseThrow(()->new NotFoundException("사용자가 없습니다."));
+    public RentalResponse rentBook(RentalRequest request) {
+        Book book = bookRepository.findById(request.bookId()).orElseThrow(()->new NotFoundException("해당하는 책이 없습니다."));
+        Member member = userRepository.findById(request.memberId()).orElseThrow(()->new NotFoundException("사용자가 없습니다."));
 
         boolean isRented = rentalRepository.existsByBookAndReturnedDateIsNull(book);
         if (isRented) throw new AlreadyExistsException("이미 대여 중입니다.");
 
-        Rental rental = new Rental(member, book);
-        return rentalRepository.save(rental);
+
+        Rental rental = rentalRepository.save(new Rental(member, book));
+        return new RentalResponse(rental.getId(), book.getTitle(), member.getName(), rental.getRentedDate());
     }
     @Transactional
     public void returnBook(Long rentalId) {
