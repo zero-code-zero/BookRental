@@ -4,6 +4,8 @@ import com.codezero.BookRental.dto.BookRequest;
 import com.codezero.BookRental.entitis.Book;
 import com.codezero.BookRental.repositories.BookRepository;
 import com.codezero.BookRental.exception.NotFoundException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -24,8 +26,8 @@ public class BookService {
         return bookRepository.save(new Book(bookRequest.getTitle(), bookRequest.getAuthor(), bookRequest.getPublishedDate()));
     }
 
-    public List<Book> getBooks() {
-        return books;
+    public Page<Book> getBooks(Pageable pageable) {
+        return bookRepository.findAll(pageable);
     }
 
     public Book updateBook(Long id, Book updateBook) {
