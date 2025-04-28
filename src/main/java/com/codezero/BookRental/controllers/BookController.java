@@ -21,6 +21,12 @@ public class BookController {
         this.bookService = bookService;
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Book> getBookById(@PathVariable Long id) {
+        Book book = bookService.getBookById(id);
+        return ResponseEntity.ok(book);
+    }
+
     @GetMapping
     public ResponseEntity<Page<Book>> getBooks(@RequestParam(required = false) String title, @RequestParam(required = false) String author, Pageable pageable) {
         Page<Book> books = this.bookService.getBooks(title, author, pageable);
