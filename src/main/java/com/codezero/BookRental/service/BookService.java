@@ -26,7 +26,14 @@ public class BookService {
         return bookRepository.save(new Book(bookRequest.getTitle(), bookRequest.getAuthor(), bookRequest.getPublishedDate()));
     }
 
-    public Page<Book> getBooks(Pageable pageable) {
+    public Page<Book> getBooks(String title, String author, Pageable pageable) {
+        if(title != null && author != null) {
+            return bookRepository.findByTitleAndAuthor(title, author, pageable);
+        } else if (title != null) {
+            return bookRepository.findByTitle(title, pageable);
+        } else if (author != null) {
+            return bookRepository.findByAuthor(author, pageable);
+        }
         return bookRepository.findAll(pageable);
     }
 

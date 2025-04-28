@@ -22,8 +22,8 @@ public class BookController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<Book>> getBooks(Pageable pageable) {
-        Page<Book> books = this.bookService.getBooks(pageable);
+    public ResponseEntity<Page<Book>> getBooks(@RequestParam(required = false) String title, @RequestParam(required = false) String author, Pageable pageable) {
+        Page<Book> books = this.bookService.getBooks(title, author, pageable);
         return ResponseEntity.ok(books);
     }
 

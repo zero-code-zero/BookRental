@@ -33,7 +33,7 @@ public class BookServiceTest {
 
         assertThat(saved.getId()).isNotNull();
         assertThat(saved.getTitle()).isEqualTo("테스트책");
-        assertThat(bookService.getBooks(PageRequest.of(0,10))).hasSize(1);
+        assertThat(bookService.getBooks(null, null, PageRequest.of(0,10))).hasSize(1);
     }
 
     @Test
@@ -61,7 +61,7 @@ public class BookServiceTest {
         boolean deleted = bookService.deleteBook(1L);
 
         assertThat(deleted).isTrue();
-        assertThat(bookService.getBooks(PageRequest.of(0,10))).isEmpty();
+        assertThat(bookService.getBooks(null, null, PageRequest.of(0,10))).isEmpty();
     }
 
     Book createBook(String title) {

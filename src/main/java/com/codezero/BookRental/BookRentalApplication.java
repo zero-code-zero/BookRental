@@ -6,6 +6,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.domain.PageRequest;
 
 import java.time.LocalDate;
 
@@ -26,7 +27,7 @@ public class BookRentalApplication {
 			System.out.println("[전체조회]");
 			bookRepository.findAll().forEach(book -> System.out.println(book.getTitle()));
 			System.out.println("[작가로 조회]");
-			bookRepository.findByAuthor("홍길동").forEach(book -> {
+			bookRepository.findByAuthor("홍길동", PageRequest.of(0,10)).forEach(book -> {
 				System.out.println(book.getTitle() + "/" + book.getAuthor() + "/" + book.getPublishedDate());
 			});
 			System.out.println("[작가와 출판일로 조회]");
