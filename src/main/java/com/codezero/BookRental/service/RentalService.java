@@ -1,5 +1,6 @@
 package com.codezero.BookRental.service;
 
+import com.codezero.BookRental.dto.RentalDto;
 import com.codezero.BookRental.dto.RentalRequest;
 import com.codezero.BookRental.dto.RentalResponse;
 import com.codezero.BookRental.entitis.Book;
@@ -10,6 +11,8 @@ import com.codezero.BookRental.exception.NotFoundException;
 import com.codezero.BookRental.repositories.BookRepository;
 import com.codezero.BookRental.repositories.MemberRepository;
 import com.codezero.BookRental.repositories.RentalRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,5 +46,15 @@ public class RentalService {
         Rental rental = rentalRepository.findByIdAndReturnedDateIsNull(rentalId)
                 .orElseThrow(()->new NotFoundException("대여중인 책이 없습니다."));
         rental.setReturnedDate(LocalDate.now());
+    }
+
+    public Page<RentalDto> getRentals(Pageable pageable) {
+        return rentalRepository.findAll(pageable).map(r->new RentalDto(
+                r.getId(),
+                r.getBook().getTitle(),
+                r.getMember().getName(),
+                r.getRentedDate(),
+                r.getReturnedDate()
+        ));
     }
 }
