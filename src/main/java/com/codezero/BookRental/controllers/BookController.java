@@ -3,6 +3,10 @@ package com.codezero.BookRental.controllers;
 import com.codezero.BookRental.dto.BookRequest;
 import com.codezero.BookRental.entitis.Book;
 import com.codezero.BookRental.service.BookService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -32,7 +36,10 @@ public class BookController {
         Page<Book> books = this.bookService.getBooks(title, author, pageable);
         return ResponseEntity.ok(books);
     }
-
+    @Operation(responses = {
+            @ApiResponse(responseCode = "201", description = "등록성공", content = @Content(schema = @Schema(implementation = Book.class))),
+            @ApiResponse(responseCode = "400", description = "잘못된 요청")
+    })
     @PostMapping
     public ResponseEntity<Book> createBook(@RequestBody @Valid BookRequest bookRequest) {
         return ResponseEntity.status(HttpStatus.CREATED).body(bookService.createBook(bookRequest));
